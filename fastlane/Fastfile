@@ -1,0 +1,29 @@
+default_platform(:android)
+
+platform :android do
+  
+  desc "Deploy to Internal Testing"
+  lane :internal do
+    increment_version_code(
+      gradle_file_path: "android/app/build.gradle"
+    )
+
+    gradle(
+      task: "clean bundleRelease",
+      project_dir: "android/"
+    )
+
+    upload_to_play_store(
+      track: 'internal',
+      release_status: 'draft',
+      aab: "android/app/build/outputs/bundle/release/app-release.aab",
+      skip_upload_apk: true,
+      skip_upload_metadata: true,
+      skip_upload_changelogs: true,
+      skip_upload_images: true,
+      skip_upload_screenshots: true,
+      json_key: ENV["PLAY_STORE_JSON_KEY"]
+    )
+  end
+
+end
