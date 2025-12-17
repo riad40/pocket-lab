@@ -25,6 +25,27 @@ Deploy to Internal Testing
 
 ----
 
+
+## iOS
+
+### ios sync_certificates
+
+```sh
+[bundle exec] fastlane ios sync_certificates
+```
+
+Sync certificates and provisioning profiles
+
+### ios beta
+
+```sh
+[bundle exec] fastlane ios beta
+```
+
+Build and upload to TestFlight
+
+----
+
 This README.md is auto-generated and will be re-generated every time [_fastlane_](https://fastlane.tools) is run.
 
 More information about _fastlane_ can be found on [fastlane.tools](https://fastlane.tools).

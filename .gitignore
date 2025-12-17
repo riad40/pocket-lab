@@ -87,3 +87,5 @@ fastlane/.env*
 
 # Service accounts
 *service-account*.json
+
+run_match.sh

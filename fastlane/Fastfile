@@ -1,4 +1,4 @@
-default_platform(:android)
+default_platform(:ios)
 
 platform :android do
   
@@ -23,6 +23,51 @@ platform :android do
       skip_upload_images: true,
       skip_upload_screenshots: true,
       json_key: ENV["PLAY_STORE_JSON_KEY"]
+    )
+  end
+
+end
+
+platform :ios do
+
+  desc "Setup App Store Connect API Key"
+  private_lane :setup_api_key do
+    app_store_connect_api_key(
+      key_id: ENV["APP_STORE_KEY_ID"],
+      issuer_id: ENV["APP_STORE_ISSUER_ID"],
+      key_content: ENV["APP_STORE_KEY_CONTENT"],
+      is_key_content_base64: false
+    )
+  end
+
+  desc "Sync certificates and provisioning profiles"
+  lane :sync_certificates do
+    setup_api_key
+    
+    match(
+      type: "appstore",
+      readonly: false
+    )
+  end
+
+  desc "Build and upload to TestFlight"
+  lane :beta do
+    setup_api_key
+    
+    match(type: "appstore", readonly: true)
+    
+    increment_build_number(
+      xcodeproj: "ios/PocketLab.xcodeproj"
+    )
+    
+    build_app(
+      scheme: "PocketLab",
+      workspace: "ios/PocketLab.xcworkspace",
+      export_method: "app-store"
+    )
+    
+    upload_to_testflight(
+      skip_waiting_for_build_processing: true
     )
   end
 

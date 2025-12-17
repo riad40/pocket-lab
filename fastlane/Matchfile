@@ -1,0 +1,10 @@
+git_url("git@github.com:riad40/dexylab-ios-certificates.git")
+
+storage_mode("git")
+
+type("appstore")
+
+app_identifier(["com.dexylab.pocketlab"])
+
+# All certificate operations will use the API key from environment
+# No username needed when using API key authentication
