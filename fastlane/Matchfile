@@ -1,4 +1,4 @@
-git_url("git@github.com:riad40/dexylab-ios-certificates.git")
+git_url(ENV["MATCH_GIT_URL"] || "git@github.com:riad40/dexylab-ios-certificates.git")
 
 storage_mode("git")
 
