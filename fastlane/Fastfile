@@ -27,6 +27,7 @@ platform :android do
   end
 
 end
+# ========== iOS Platform ==========
 
 platform :ios do
 
@@ -40,43 +41,44 @@ platform :ios do
     )
   end
 
-  desc "Sync certificates and provisioning profiles"
-  lane :sync_certificates do
-    setup_api_key
-    
-    match(
-      type: "appstore",
-      readonly: false
-    )
-  end
-
   desc "Build and upload to TestFlight"
   lane :beta do
     setup_api_key
     
-    match(type: "appstore", readonly: true)
+    # Sync certificates
+    match(
+      type: "appstore",
+      readonly: true
+    )
     
+    # Disable automatic signing and set manual signing
+    update_code_signing_settings(
+      use_automatic_signing: false,
+      path: "ios/PocketLab.xcodeproj",
+      team_id: "N5Q997A5B6",
+      code_sign_identity: "Apple Distribution",
+      profile_name: "match AppStore com.dexylab.pocketlab",
+      bundle_identifier: "com.dexylab.pocketlab"
+    )
+    
+    # Increment build number
     increment_build_number(
       xcodeproj: "ios/PocketLab.xcodeproj"
     )
     
+    # Build the app
     build_app(
       scheme: "PocketLab",
       workspace: "ios/PocketLab.xcworkspace",
       export_method: "app-store",
       export_options: {
-        signingStyle: "manual",
         provisioningProfiles: {
           "com.dexylab.pocketlab" => "match AppStore com.dexylab.pocketlab"
         }
-      },
-      xcargs: "
-        CODE_SIGN_STYLE=Manual
-        CODE_SIGN_IDENTITY='Apple Distribution'
-        DEVELOPMENT_TEAM=N5Q997A5B6
-      "
+      }
     )
     
+    # Upload to TestFlight
     upload_to_testflight(
       skip_waiting_for_build_processing: true
     )
