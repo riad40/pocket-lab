@@ -58,9 +58,6 @@ const getTabBarIcon = (routeName: keyof TabParamList) => {
   };
 };
 
-
-console.log("from mobile app")
-
 const TabNavigator: React.FC = () => {
   return (
     <Tab.Navigator

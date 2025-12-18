@@ -27,7 +27,6 @@ platform :android do
   end
 
 end
-# ========== iOS Platform ==========
 
 platform :ios do
 
@@ -43,15 +42,16 @@ platform :ios do
 
   desc "Build and upload to TestFlight"
   lane :beta do
+
+    setup_ci
+
     setup_api_key
     
-    # Sync certificates
     match(
       type: "appstore",
       readonly: true
     )
     
-    # Disable automatic signing and set manual signing
     update_code_signing_settings(
       use_automatic_signing: false,
       path: "ios/PocketLab.xcodeproj",
@@ -61,12 +61,10 @@ platform :ios do
       bundle_identifier: "com.dexylab.pocketlab"
     )
     
-    # Increment build number
     increment_build_number(
       xcodeproj: "ios/PocketLab.xcodeproj"
     )
     
-    # Build the app
     build_app(
       scheme: "PocketLab",
       workspace: "ios/PocketLab.xcworkspace",
