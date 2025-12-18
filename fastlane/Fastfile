@@ -65,11 +65,16 @@ platform :ios do
       workspace: "ios/PocketLab.xcworkspace",
       export_method: "app-store",
       export_options: {
+        signingStyle: "manual",
         provisioningProfiles: {
           "com.dexylab.pocketlab" => "match AppStore com.dexylab.pocketlab"
         }
       },
-      xcargs: "CODE_SIGN_STYLE=Manual PROVISIONING_PROFILE_SPECIFIER='match AppStore com.dexylab.pocketlab' DEVELOPMENT_TEAM=N5Q997A5B6"
+      xcargs: "
+        CODE_SIGN_STYLE=Manual
+        CODE_SIGN_IDENTITY='Apple Distribution'
+        DEVELOPMENT_TEAM=N5Q997A5B6
+      "
     )
     
     upload_to_testflight(

@@ -58,6 +58,8 @@ const getTabBarIcon = (routeName: keyof TabParamList) => {
   };
 };
 
+console.log('TabNavigator loaded');
+
 const TabNavigator: React.FC = () => {
   return (
     <Tab.Navigator
