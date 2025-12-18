@@ -53,6 +53,7 @@ jobs:
       - name: Build and deploy to TestFlight
         run: bundle exec fastlane ios beta
         env:
+          MATCH_GIT_URL: ${{ secrets.MATCH_GIT_URL }}
           APP_STORE_KEY_ID: ${{ secrets.APP_STORE_KEY_ID }}
           APP_STORE_ISSUER_ID: ${{ secrets.APP_STORE_ISSUER_ID }}
           APP_STORE_KEY_CONTENT: ${{ secrets.APP_STORE_KEY_CONTENT }}
