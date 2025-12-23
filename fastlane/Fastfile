@@ -62,7 +62,7 @@ platform :ios do
     )
     
     increment_build_number(
-      xcodeproj: "ios/PocketLab.xcodeproj"
+      xcodeproj: "ios/PocketLab.xcodeproj",
     )
     
     build_app(
@@ -77,8 +77,8 @@ platform :ios do
     )
     
     upload_to_testflight(
+      skip_submission: true,
       skip_waiting_for_build_processing: true,
-      skip_submission: true
     )
   end
 
